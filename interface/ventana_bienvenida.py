@@ -84,7 +84,7 @@ def mostrar_ventana_bienvenida():
             proyecto, ruta = resultado
             if proyecto and ruta:
                 visual.actualizar_ruta(ruta)
-                abrir_ventana_editor(proyecto.nombre)
+                abrir_ventana_editor(proyecto.nombre, ruta_proyecto=ruta)
     btn_nuevo = ctk.CTkButton(tab_inicio, text="Crear nuevo proyecto", width=220, command=crear_nuevo_proyecto, fg_color="#444444", hover_color="#666666")
     btn_nuevo.pack(pady=5)
     btn_cargar = ctk.CTkButton(tab_inicio, text="Cargar proyecto existente", width=220, command=cargar_proyecto_existente, fg_color="#444444", hover_color="#666666")
@@ -99,10 +99,13 @@ def mostrar_ventana_bienvenida():
         visual.notebook.forget(indice)
 
     # Función para abrir o cargar proyecto y crear pestaña
-    def abrir_ventana_editor(nombre_pestana):
+    def abrir_ventana_editor(nombre_pestana, ruta_proyecto=None):
         from interface.Ventana_Editor import EditorFrame
-        frame_editor = EditorFrame(visual.notebook)
-        visual.agregar_pestana(frame_editor, nombre_pestana)
+        import tkinter as tk
+        contenedor = tk.Frame(visual.notebook)  # Frame estándar de Tkinter
+        frame_editor = EditorFrame(contenedor, ruta_proyecto=ruta_proyecto, nombre_proyecto=nombre_pestana)
+        frame_editor.pack(fill="both", expand=True)
+        visual.agregar_pestana(contenedor, nombre_pestana)
         idx = visual.notebook.index("end") - 1
         visual.notebook.select(idx)
 

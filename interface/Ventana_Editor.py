@@ -5,29 +5,17 @@ import os
 
 # Ventana de edición de proyectos
 class EditorFrame(ctk.CTkFrame):
-    def __init__(self, parent, ruta_proyecto=None, *args, **kwargs):
+    def __init__(self, parent, ruta_proyecto=None, nombre_proyecto=None, *args, **kwargs):
         super().__init__(parent, *args, **kwargs)
         ctk.set_appearance_mode("dark")
         ctk.set_default_color_theme("dark-blue")  # Tema gris oscuro
 
-
-
-        # Área superior: Herramientas
-        self.frame_herramientas = ctk.CTkFrame(self, height=90, fg_color="#2a2a2a")
-        self.frame_herramientas.pack(side="top", fill="x")
-        self.frame_herramientas.pack_propagate(False)
-        # Título de sección Herramientas
-        label_herr = ctk.CTkLabel(self.frame_herramientas, text="Barra de Herramientas", anchor="w", font=("Arial", 13))
-        label_herr.pack(side="left", padx=20, pady=5)
-        # Botón de cerrar Proyecto en la barra de herramientas
-        self.btn_cerrar = ctk.CTkButton(
-            self.frame_herramientas,
-            text="Cerrar Proyecto",
-            command=self.cerrar_pestana,
-            fg_color="#444444",
-            hover_color="#666666"
-        )
-        self.btn_cerrar.pack(side="right", padx=10, pady=5)
+        # --- MENÚ DE PESTAÑAS PARA BARRAS DE HERRAMIENTAS (solo espacio, sin vincular frames) ---
+        self.notebook_herramientas = ttk.Notebook(self)
+        self.notebook_herramientas.pack(side="top", fill="x")
+        self.notebook_herramientas.add(ctk.CTkFrame(self.notebook_herramientas, height=90, fg_color="#2a2a2a"), text="Administrar proyectos")
+        self.notebook_herramientas.add(ctk.CTkFrame(self.notebook_herramientas, height=90, fg_color="#2a2a2a"), text="Productos")
+        self.notebook_herramientas.add(ctk.CTkFrame(self.notebook_herramientas, height=90, fg_color="#2a2a2a"), text="Pieza")
 
         # Área central: Acción (izquierda) y Visualización (derecha) usando grid
         self.frame_central = ctk.CTkFrame(self, height=400, fg_color="#222222")
@@ -53,7 +41,7 @@ class EditorFrame(ctk.CTkFrame):
         self.frame_accion.grid_columnconfigure(2, weight=3)
         ruta_txt = None
         if ruta_proyecto:
-            nombre = os.path.basename(ruta_proyecto)
+            nombre = nombre_proyecto if nombre_proyecto else os.path.basename(ruta_proyecto)
             ruta_txt = os.path.join(ruta_proyecto, f"{nombre}.txt")
         self.editor_notas = EditorNotas(self.frame_accion, ruta_txt=ruta_txt)
         self.editor_notas.texto.grid(row=0, column=0, sticky="nsew", padx=10, pady=(10,5))

@@ -9,7 +9,8 @@ def mostrar_ventana_bienvenida():
     ctk.set_default_color_theme("dark-blue")  # Tema gris oscuro
     root = ctk.CTk()
     root.title("PipCut CNC - 3ejes")
-    root.geometry("800x400")
+    # Pantalla completa compatible multiplataforma
+    root.attributes('-fullscreen', True)
     root.configure(bg="#222222")  # Fondo gris oscuro para toda la ventana
 
     # Callbacks para el menú global

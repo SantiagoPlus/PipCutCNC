@@ -12,17 +12,17 @@ class EditorFrame(ctk.CTkFrame):
 
 
 
-        # Área superior: Herramientas (horizontal, más alta)
+        # Área superior: Herramientas
         self.frame_herramientas = ctk.CTkFrame(self, height=90, fg_color="#2a2a2a")
         self.frame_herramientas.pack(side="top", fill="x")
         self.frame_herramientas.pack_propagate(False)
         # Título de sección Herramientas
         label_herr = ctk.CTkLabel(self.frame_herramientas, text="Barra de Herramientas", anchor="w", font=("Arial", 13))
         label_herr.pack(side="left", padx=20, pady=5)
-        # Botón de cerrar pestaña en la barra de herramientas
+        # Botón de cerrar Proyecto en la barra de herramientas
         self.btn_cerrar = ctk.CTkButton(
             self.frame_herramientas,
-            text="Cerrar pestaña",
+            text="Cerrar Proyecto",
             command=self.cerrar_pestana,
             fg_color="#444444",
             hover_color="#666666"
